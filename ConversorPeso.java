@@ -1,5 +1,3 @@
-package Conversores;
-
 import java.awt.*;
 import java.awt.image.*;
 import java.io.*;
@@ -34,7 +32,7 @@ public class ConversorPeso extends JFrame {
         p1.add(output);
 
         try {
-            BufferedImage myPicture = ImageIO.read(new File("..\\Conversores\\peso.png"));
+            BufferedImage myPicture = ImageIO.read(new File("peso.png"));
             JLabel picLabel = new JLabel(new ImageIcon(myPicture));
             picLabel.setForeground(new Color(75, 74, 100));
             getContentPane().add(picLabel, BorderLayout.NORTH);
