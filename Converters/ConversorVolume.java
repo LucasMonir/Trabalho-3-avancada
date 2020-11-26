@@ -1,21 +1,23 @@
-import Converters.*;
+package Converters;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
+import java.awt.image.*;
 import java.io.*;
-import javax.imageio.*;
+import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class App extends JFrame {
-    private String[] opcoesMenu = { "", "Conversor de temperatura", "Conversor de distância", "Conversor de peso",
-            "Conversor de volume" };
+public class ConversorVolume extends JFrame {
+    private String[] opcoesMenu = { "", "Ml -> Oz", "Oz -> Ml", "Lt -> Gal", "Gal -> lt" };
     private JComboBox<String> selecaoMenu = new JComboBox<>(opcoesMenu);
-    private JButton ok = new JButton("OK");
+    private JTextField input = new JTextField();
+    private JTextField output = new JTextField();
+    private JButton confirm = new JButton("Converter");
 
-    public App() {
-        super("Conversos de temperaturas");
-        setPreferredSize(new Dimension(400, 300));
+    public ConversorVolume() {
+        super("Conversor");
+        setPreferredSize(new Dimension(400, 500));
         setLayout(new BorderLayout());
         setResizable(false);
 
@@ -24,10 +26,17 @@ public class App extends JFrame {
         JPanel p1 = new JPanel();
         p1.setLayout(new GridLayout(0, 1));
 
-        JLabel l1 = new JLabel("Selecione a operação:");
+        p1.add(new JLabel("Qual conversão a realizar?"));
+        p1.add(selecaoMenu);
+
+        p1.add(new JLabel("Insira valor a converter:"));
+        p1.add(input);
+
+        p1.add(new JLabel("Resultado: "));
+        p1.add(output);
 
         try {
-            BufferedImage myPicture = ImageIO.read(new File("Images/conversor.png"));
+            BufferedImage myPicture = ImageIO.read(new File("Images/volume.png"));
             JLabel picLabel = new JLabel(new ImageIcon(myPicture));
             picLabel.setForeground(new Color(75, 74, 100));
             getContentPane().add(picLabel, BorderLayout.NORTH);
@@ -35,21 +44,17 @@ public class App extends JFrame {
             System.out.println(e + "FILE NOT FOUND!!!!");
         }
 
-        ok.addActionListener(new ActionListener() {
-
+        confirm.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 getSelectedMenuItem();
             }
-            
         });
 
-        p1.add(l1);
-        p1.add(selecaoMenu);
         getContentPane().add(p1, BorderLayout.CENTER);
-        getContentPane().add(ok, BorderLayout.SOUTH);
+        getContentPane().add(confirm, BorderLayout.SOUTH);
         pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(HIDE_ON_CLOSE);
         setVisible(true);
     }
 
@@ -58,24 +63,20 @@ public class App extends JFrame {
         
         switch(index){
             case 1:
-                new ConversorTemperatura();
+                // ml pra onça liquida
             break;
 
             case 2:
-                new ConversorDistancia();
+                // onça liquida pra ml
             break;
 
             case 3:
-                new ConversorPeso();
+                // litro -> gallon
             break;
 
             case 4:
-                new ConversorVolume();
+                // gallon -> litro
             break;
         }
-    }
-
-    public static void main(String[] args) {
-        new App();
     }
 }
