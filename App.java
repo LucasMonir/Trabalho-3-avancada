@@ -6,10 +6,9 @@ import java.awt.image.BufferedImage;
 import java.io.*;
 import javax.imageio.*;
 import javax.swing.*;
-
+ 
 public class App extends JFrame {
-    private String[] opcoesMenu = { "", "Conversor de temperatura", "Conversor de distância", "Conversor de peso",
-            "Conversor de volume" };
+    private String[] opcoesMenu = { "", "Conversor de temperatura", "Conversor de distância", "Conversor de peso", "Conversor de volume" };
     private JComboBox<String> selecaoMenu = new JComboBox<>(opcoesMenu);
     private JButton ok = new JButton("OK");
 
