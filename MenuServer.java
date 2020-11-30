@@ -16,13 +16,6 @@ public class MenuServer {
                 Scanner in = new Scanner(inStream);
                 PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
 
-                out.println("Bem vindo!");
-                out.println("Por favor, selecione uma opcao");
-                out.println("1 ............ Converter Dolar pra Real");
-                out.println("2 ............ Converter Celsius em Fahrenheit");
-                out.println("3 ............ Converter Km em m");
-                out.println("0 ............ Sair");
-                out.println(" ");
                 boolean done = false;
 
                 while (!done && in.hasNextLine()) {
@@ -58,9 +51,6 @@ public class MenuServer {
                             break;
                     }
 
-//                    out.println("Echo: " + line);
-//                    System.out.println(" " + line);
-
                     if (line.trim().equals("0")) {
                         done = true;
                     }
@@ -72,5 +62,13 @@ public class MenuServer {
             e.printStackTrace();
         }
 
+    }
+
+    public static double conversor(double valor, double coeficiente, char operacao) {
+        if(operacao == 'm') {
+            return valor * coeficiente;
+        } else {
+            return valor / coeficiente;
+        }
     }
 }

@@ -60,22 +60,32 @@ public class ConversorPeso extends JFrame {
 
     public void getSelectedMenuItem() {
         int index = selecaoMenu.getSelectedIndex();
-        
+        char operacao = 'a';
+        double coeficiente = 0;
+
         switch(index){
             case 1:
-                // kg pra libra
+                // kg pra libra, coeficiente pra ilustrar, pode apagar
+                operacao = 'm';
+                coeficiente = 2.205;
             break;
 
             case 2:
-                // libra pra kg
+                // libra pra kg , enviar coeficiente 
+                operacao = 'd';
+                coeficiente = 2.205;
             break;
 
             case 3:
-                // onça pra grama 
+                // onça pra grama , enviar coeficiente
+                operacao = 'm';
+                coeficiente = 28.34952;
             break;
 
             case 4:
-                // grama pra onça
+                // grama pra onça , enviar coeficiente
+                operacao = 'd';
+                coeficiente = 28.34952;
             break;
         }
     }
