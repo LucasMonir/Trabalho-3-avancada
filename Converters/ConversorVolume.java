@@ -60,22 +60,32 @@ public class ConversorVolume extends JFrame {
 
     public void getSelectedMenuItem() {
         int index = selecaoMenu.getSelectedIndex();
-        
+        char operacao = 'a';
+        double coeficiente = 0;
+
         switch(index){
             case 1:
-                // ml pra onça liquida
+                // ml oz
+                operacao = 'd';
+                coeficiente = 29.574;
             break;
 
             case 2:
                 // onça liquida pra ml
+                operacao = 'm';
+                coeficiente = 29.574;
             break;
 
             case 3:
                 // litro -> gallon
+                operacao = 'd';
+                coeficiente = 3.785;
             break;
 
             case 4:
                 // gallon -> litro
+                operacao = 'm';
+                coeficiente = 3.785;
             break;
         }
     }

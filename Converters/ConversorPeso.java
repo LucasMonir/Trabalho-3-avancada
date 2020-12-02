@@ -1,5 +1,4 @@
 package Converters;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -88,6 +87,5 @@ public class ConversorPeso extends JFrame {
                 coeficiente = 28.34952;
             break;
         }
-    }
-    
+    }   
 }

@@ -1,7 +1,7 @@
+package Converters;
 
 import java.io.*;
 import java.net.*;
-
 import java.util.*;
 
 public class MenuServer {
@@ -64,11 +64,36 @@ public class MenuServer {
 
     }
 
-    public static double conversor(double valor, double coeficiente, char operacao) {
+    // comunicação usando serialização e flush
+    public static double converteValores(double valor, double coeficiente, char operacao) {
         if(operacao == 'm') {
             return valor * coeficiente;
         } else {
             return valor / coeficiente;
+        }
+    }
+
+    public static double converteCelsiusFarenheit(double valor, char operacao) {
+        if (operacao == 'c') {
+            return (valor * 1.8) + 32;  
+        } else {
+            return (valor - 32) * 0.5555;
+        }
+    }
+
+    public static double converteParaKelvin(double valor, char operacao) {
+        if (operacao == 'c') {
+            return valor + 273.15;
+        } else {
+            return converteCelsiusFarenheit(valor, operacao) + 273.15;
+        }
+    }
+
+    public static double converteDeKelvin(double valor, char operacao) {
+        if( operacao == 'c') {
+            return valor - 273.15;
+        } else {
+            return converteCelsiusFarenheit((valor - 273.15), operacao); 
         }
     }
 }

@@ -60,22 +60,31 @@ public class ConversorTemperatura extends JFrame {
 
     public void getSelectedMenuItem() {
         int index = selecaoMenu.getSelectedIndex();
+        char operacao = 'f';
+        double coeficiente = 0;
         
         switch(index){
+            
             case 1:
                 // celsius pra farenheit
+                operacao = 'c';
+                
             break;
 
             case 2:
                 //celsius kelvin
+                operacao = 'c';
             break; 
 
             case 3:
                 // farenheit pra kelvin 
+                
             break;
 
             case 4:
+                // primeiro remove 32
                 // farenheit celsius
+
             break;
 
             case 5:
@@ -84,6 +93,7 @@ public class ConversorTemperatura extends JFrame {
 
             case 6:
                 // kelvin celsius
+                operacao = 'c';
             break;
         }
     }    

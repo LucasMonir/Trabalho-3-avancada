@@ -60,22 +60,32 @@ public class ConversorDistancia extends JFrame {
 
     public void getSelectedMenuItem() {
         int index = selecaoMenu.getSelectedIndex();
-        
+        char operacao = 'a';
+        double coeficiente = 0;
+
         switch(index){
             case 1:
-                // comando pra metro pra pés
+                // metro pra pé
+                operacao = 'm';
+                coeficiente = 3.281;
             break;
 
             case 2:
                 // km pra milha
+                operacao = 'd';
+                coeficiente = 1.609;
             break;
 
             case 3:
                 // pé pra metro 
+                operacao = 'd';
+                coeficiente = 3.281;
             break;
 
             case 4:
                 // milha pra km
+                operacao = 'm';
+                coeficiente = 1.609;
             break;
         }
     }
