@@ -4,9 +4,55 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
-public class MenuServer {
+public class MenuServer extends Thread {
+    private ServerSocket socket;
+
+    public MenuServer(int porta){
+        super();
+        try {
+            socket = new ServerSocket(porta);
+			System.out.println("Servidor iniciado na porta  " + porta);
+        } catch (IOException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public void start() {
+        Socket cliente = null;
+
+        while(true) {
+            if(socket == null) {
+                System.out.println("Não inicializado");
+                return;
+            }
+
+            // Processamento rola aqui dentro, creio que usando serielização
+            try {
+                // recebe, jogar numa string e usar .split separado por , 
+                cliente = socket.accept();
+                BufferedReader reader = new BufferedReader (new InputStreamReader(cliente.getInputStream()));
+                String linhaAtual = reader.readLine();
+
+
+                // switch pra saber ql operação, receber valor e operação e devolver resultado
+
+                // enviar para o cliente o resultado
+                BufferedOutputStream saida = new BufferedOutputStream(cliente.getOutputStream());
+				PrintWriter resposta = new PrintWriter(saida, false);
+                // resposta aqui dentro e usa parser no outro lado depois d processar
+                resposta.println("");
+				resposta.flush();
+
+
+            } catch (IOException e) {
+                System.out.println("Problema encontrado" + e.getMessage());
+            }
+        }
+    }
 
     public static void main(String[] args) {
+        
+        /*
         try {
             ServerSocket s = new ServerSocket(8189);
             Socket incoming = s.accept();
@@ -14,7 +60,7 @@ public class MenuServer {
                 InputStream inStream = incoming.getInputStream();
                 OutputStream outStream = incoming.getOutputStream();
                 Scanner in = new Scanner(inStream);
-                PrintWriter out = new PrintWriter(outStream, true /* autoFlush */);
+                PrintWriter out = new PrintWriter(outStream, true /* autoFlush */ /*);
 
                 boolean done = false;
 
@@ -61,7 +107,7 @@ public class MenuServer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+        */
     }
 
     // comunicação usando serialização e flush
