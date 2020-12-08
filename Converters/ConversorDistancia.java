@@ -41,7 +41,7 @@ public class ConversorDistancia extends JFrame {
             picLabel.setForeground(new Color(75, 74, 100));
             getContentPane().add(picLabel, BorderLayout.NORTH);
         } catch (Exception e) {
-            System.out.println(e + "FILE NOT FOUND!!!!");
+            System.out.println(e + "Imagem não encontrada");
         }
 
         confirm.addActionListener(new ActionListener() {

@@ -5,11 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.Socket;
-
 import javax.imageio.*;
 import javax.swing.*;
 
 public class Client extends JFrame {
+    private static String host = "localhost";
+    private static int port = 2000;
     private String[] opcoesMenu = { "", "Conversor de temperatura", "Conversor de distância", "Conversor de peso",
             "Conversor de volume" };
     private JComboBox<String> selecaoMenu = new JComboBox<>(opcoesMenu);
@@ -34,7 +35,7 @@ public class Client extends JFrame {
             picLabel.setForeground(new Color(75, 74, 100));
             getContentPane().add(picLabel, BorderLayout.NORTH);
         } catch (Exception e) {
-            System.out.println(e + "FILE NOT FOUND!!!!");
+            System.out.println(e + "Imagem não encontrada");
         }
 
         ok.addActionListener(new ActionListener() {
@@ -77,48 +78,46 @@ public class Client extends JFrame {
         }
     }
 
+    public static Socket criarSocket() throws IOException {
+
+        // Efetua a conexão com o servidor
+        Socket sock = new Socket(host, (port));
+        sock.setSoTimeout(20000);
+
+        // Envia uma mensagem para o servidor
+        BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
+        PrintWriter os = new PrintWriter(bos, false);
+        os.println(mesg);
+        os.flush();
+
+        // Aguarda uma resposta do servidor e imprime na tela
+        BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+        boolean eof = false;
+        while (!eof) {
+            String line = in.readLine();
+            if (line != null)
+                System.out.println(line);
+            else
+                eof = true;
+        }
+
+        // Fecha a conexão
+        sock.close();
+
+    };
+
+    public static void fecharSocket() {
+
+    }
+
     public static void main(String[] args) {
         // codigo do popov
-        String host;
-        String port;
-        String mesg;
-
-        if (args.length == 3) {
-            host = args[0];
-            port = args[1];
-        } else {
-            System.out.println("Client <host> <port>");
-            return;
-        }
         try {
-            // Efetua a conexão com o servidor
-            Socket sock = new Socket(host, Integer.parseInt(port));
-            sock.setSoTimeout(20000);
-
-            // Envia uma mensagem para o servidor
-            BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
-            PrintWriter os = new PrintWriter(bos, false);
-            os.println(mesg);
-            os.flush();
-
-            // Aguarda uma resposta do servidor e imprime na tela
-            BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-            boolean eof = false;
-            while (!eof) {
-                String line = in.readLine();
-                if (line != null)
-                    System.out.println(line);
-                else
-                    eof = true;
-            }
-
-            // Fecha a conexão
-            sock.close();
+            // as telas chamam os metodos de abrir conexão e fechar conexão do client, e de lá enviam e recebem o parametros
         } catch (IOException e) {
             System.out.println("IO Error: " + e.getMessage());
         }
-        
-        //  nossa janela ai
+        // nossa janela ai
         new Client();
     }
 }
