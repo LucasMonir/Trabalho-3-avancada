@@ -81,14 +81,14 @@ public class Client extends JFrame {
         }
     }
 
-    public static void setMensagem(String mensagem2){
+    public static void setMensagem(String mensagem2) {
         mensagem = mensagem2;
     }
 
     public static String criaSock() {
         try {
             Socket sock = new Socket(host, (port));
-            sock.setSoTimeout(20000);
+            sock.setSoTimeout(5000);
 
             // Envia uma mensagem para o servidor
             BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
@@ -99,14 +99,12 @@ public class Client extends JFrame {
             // Aguarda uma resposta do servidor e imprime na tela
             BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             boolean eof = false;
-           
             while (!eof) {
                 String line = in.readLine();
-                if (line != null) {
+                if (line != null)
                     System.out.println(line);
-                } else {
+                else
                     eof = true;
-                }
             }
 
             // Fecha a conexão

@@ -20,37 +20,38 @@ public class MenuServer extends Thread {
     }
 
     public void run() {
-        Socket cliente = null;
+		Socket client = null;
 
-        while(true) {
-            if(socket == null) {
-                System.out.println("Não inicializado");
-                return;
-            }
+		while (true) {
+			if (socket == null)
+				return;
+			try {
+				// Aguarda um cliente se conectar
+				client = socket.accept();
 
-            // Processamento rola aqui dentro, creio que usando serielização
-            try {
-                // recebe, jogar numa string e usar .split separado por , 
-                cliente = socket.accept();
-                BufferedReader reader = new BufferedReader (new InputStreamReader(cliente.getInputStream()));
-                String linhaAtual = reader.readLine();
+				// Recebe a mensagem do cliente e imprime na tela
+				BufferedReader in = new BufferedReader(
+					new InputStreamReader(client.getInputStream()));
+				String c = in.readLine();
+				System.out.println(c);
 
+				// Envia uma resposta ao cliente
+				BufferedOutputStream bos = new BufferedOutputStream(
+					client.getOutputStream());
+                PrintWriter os = new PrintWriter(bos, false);
+                System.out.println(bos);
+				os.println("return of '" + c + "'");
+				os.flush();
 
-                // switch pra saber ql operação, receber valor e operação e devolver resultado
-
-                // enviar para o cliente o resultado
-                BufferedOutputStream saida = new BufferedOutputStream(cliente.getOutputStream());
-				PrintWriter resposta = new PrintWriter(saida, false);
-                // resposta aqui dentro e usa parser no outro lado depois d processar
-                resposta.println("");
-				resposta.flush();
-
-
-            } catch (IOException e) {
-                System.out.println("Problema encontrado" + e.getMessage());
-            }
-        }
-    }
+				// Efetua e feecha a conexão
+				os.close();
+				client.close();
+			} catch (IOException e) {
+				System.out.println("Error: couldn't connect to client.");
+				System.exit(1);
+			}
+		}
+	}
 
     public static void main(String[] args) {
         MenuServer ms = new MenuServer();
