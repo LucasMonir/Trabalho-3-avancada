@@ -80,43 +80,41 @@ public class Client extends JFrame {
 
     public static Socket criarSocket() throws IOException {
 
-        // Efetua a conexão com o servidor
-        Socket sock = new Socket(host, (port));
-        sock.setSoTimeout(20000);
-
-        // Envia uma mensagem para o servidor
-        BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
-        PrintWriter os = new PrintWriter(bos, false);
-        os.println(mesg);
-        os.flush();
-
-        // Aguarda uma resposta do servidor e imprime na tela
-        BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
-        boolean eof = false;
-        while (!eof) {
-            String line = in.readLine();
-            if (line != null)
-                System.out.println(line);
-            else
-                eof = true;
-        }
-
-        // Fecha a conexão
-        sock.close();
-
-    };
-
-    public static void fecharSocket() {
-
-    }
-
-    public static void main(String[] args) {
-        // codigo do popov
         try {
-            // as telas chamam os metodos de abrir conexão e fechar conexão do client, e de lá enviam e recebem o parametros
+            // as telas chamam os metodos de abrir conexão e fechar conexão do client, e de
+            // lá enviam e recebem o parametros
+
+            // Efetua a conexão com o servidor
+            Socket sock = new Socket(host, (port));
+            sock.setSoTimeout(20000);
+
+            // Envia uma mensagem para o servidor
+            BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
+            PrintWriter os = new PrintWriter(bos, false);
+            os.println(mesg);
+            os.flush();
+
+            // Aguarda uma resposta do servidor e imprime na tela
+            BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
+            boolean eof = false;
+            while (!eof) {
+                String line = in.readLine();
+                if (line != null)
+                    System.out.println(line);
+                else
+                    eof = true;
+            }
+
+            // Fecha a conexão
+            sock.close();
         } catch (IOException e) {
             System.out.println("IO Error: " + e.getMessage());
         }
+    };
+
+    public static void main(String[] args) {
+        // codigo do popov
+
         // nossa janela ai
         new Client();
     }
