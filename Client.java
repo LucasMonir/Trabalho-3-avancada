@@ -91,7 +91,7 @@ public class Client extends JFrame {
             // Envia uma mensagem para o servidor
             BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
             PrintWriter os = new PrintWriter(bos, false);
-            os.println(mesg);
+            os.println("COLOCAR AQUI OQ É P ENVIAR E TAL NE");
             os.flush();
 
             // Aguarda uma resposta do servidor e imprime na tela
