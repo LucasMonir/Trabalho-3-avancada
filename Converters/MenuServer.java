@@ -13,7 +13,7 @@ import java.util.Date;
 public class MenuServer extends Thread {
     private ServerSocket socket;
     private int port = 2000;
-    private static int id = 0;
+    private static int id = 1;
 
     public MenuServer() {
         super();
@@ -39,34 +39,38 @@ public class MenuServer extends Thread {
                 System.out.println(c);
 
                 String[] params = c.split(",");
-                System.out.println(params[1]);
+                if (params.length != 1) {
+                    System.out.println(params[1]);
 
-                double valor = Double.parseDouble(params[2]);
-                char operacao = params[0].charAt(0);
-                double coef = Double.parseDouble(params[1]);
-                int metodo;
+                    double valor = Double.parseDouble(params[2]);
+                    char operacao = params[0].charAt(0);
+                    double coef = Double.parseDouble(params[1]);
+                    int metodo;
 
-                if (params.length == 4) {
-                    metodo = Integer.parseInt(params[3]);
-                }
-
-                if (coef != 0.0) {
-                    c = "" + converteValores(valor, coef, operacao);
-                } else {
-                    switch (Integer.parseInt(params[3])) {
-                        case 1:
-                            c = "" + converteCelsiusFarenheit(valor, operacao);
-                            break;
-                        case 2:
-                            c = "" + converteParaKelvin(valor, operacao);
-                            break;
-                        case 3:
-                            c = "" + converteDeKelvin(valor, operacao);
-                            break;
+                    if (params.length == 4) {
+                        metodo = Integer.parseInt(params[3]);
                     }
-                }
 
-                salvaDb(valor, operacao, Double.parseDouble(c));
+                    if (coef != 0.0) {
+                        c = "" + converteValores(valor, coef, operacao);
+                    } else {
+                        switch (Integer.parseInt(params[3])) {
+                            case 1:
+                                c = "" + converteCelsiusFarenheit(valor, operacao);
+                                break;
+                            case 2:
+                                c = "" + converteParaKelvin(valor, operacao);
+                                break;
+                            case 3:
+                                c = "" + converteDeKelvin(valor, operacao);
+                                break;
+                        }
+                    }
+
+                    salvaDb(valor, operacao, Double.parseDouble(c));
+                } else {
+                    c = exibeTudo();
+                }
 
                 System.out.println(c);
 
@@ -126,11 +130,10 @@ public class MenuServer extends Thread {
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
         Date date = new Date();
         String data = formatter.format(date);
-        id++;
 
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
 
-            System.out.println("Conexão realizada");
+            System.out.println("Conectado com sucesso");
 
             Statement statement = connection.createStatement();
 
@@ -142,25 +145,32 @@ public class MenuServer extends Thread {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+        
+        id++;
     }
 
-    public static void exibeTudo() {
+    public static String exibeTudo() {
         try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
 
-            System.out.println("Conexão realizada");
+            System.out.println("Conectado com sucesso");
 
             Statement statement = connection.createStatement();
 
-            String query = "CREATE TABLE IF NOT EXISTS log(id integer primary key autoincrement, valor text,  operacao text,  resultado text, hora text)";
-        
-            ResultSet rs   = statement.executeQuery(query);
+            String query = "SELECT * FROM LOG";
 
+            ResultSet rs = statement.executeQuery(query);
+            
+            String resultado = "id" + " \t " + "valor" + " \t " + "operacao" + " \t " + "resultado" + " \t " + "hora" + "\n";
             while (rs.next()) {
-                System.out.println(rs.getInt("id"));
+                resultado += rs.getInt("id") + " \t " + rs.getBigDecimal("valor") + " \t " + rs.getString("operacao") + " \t " + rs.getBigDecimal("resultado") + " \t " + rs.getString("hora") + "\n";
             }
 
+            return resultado;
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+
+        System.out.println("MenuServer_174: não houve retorno");
+        return null;
     }
 }

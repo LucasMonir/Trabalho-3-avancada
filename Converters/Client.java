@@ -79,7 +79,7 @@ public class Client extends JFrame {
                 break;
             case 5:
                 Client.setMensagem("registro");
-                Client.criaSock();
+                System.out.println(Client.criaSock() + "aaaaaaaaaaaaaaa");
                 break;
 
             default:
