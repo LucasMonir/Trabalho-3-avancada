@@ -90,26 +90,24 @@ public class Client extends JFrame {
             Socket sock = new Socket(host, (port));
             sock.setSoTimeout(5000);
 
-            // Envia uma mensagem para o servidor
             BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
             PrintWriter os = new PrintWriter(bos, false);
             os.println(mensagem);
             os.flush();
 
-            // Aguarda uma resposta do servidor e imprime na tela
             BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             boolean eof = false;
+            
             while (!eof) {
                 String line = in.readLine();
                 if (line != null)
                     System.out.println(line);
-                else
-                    eof = true;
+                    sock.close();
+                    return line + "";
             }
 
-            // Fecha a conexão
-            sock.close();
-            return in + "";
+            
+            
         } catch (IOException e) {
             System.out.println("IO Error: " + e.getMessage());
         }

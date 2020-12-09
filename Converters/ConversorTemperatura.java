@@ -62,57 +62,57 @@ public class ConversorTemperatura extends JFrame {
         int index = selecaoMenu.getSelectedIndex();
         double valor = Double.parseDouble(input.getText());
         char operacao = 'f';
-        double coeficiente = 0;
+        String coef = ",0.0";
+        int metodo = 0;
 
         switch (index) {
 
             case 1:
-                // celsius pra farenheit
                 operacao = 'c';
-                String mensagem = operacao + "," + coeficiente + "," + valor;
+                metodo = 1;
+                String mensagem = operacao + coef + "," + valor + "," + metodo;
                 Client.setMensagem(mensagem);
                 output.setText(Client.criaSock());
                 
                 break;
 
             case 2:
-                // celsius kelvin
                 operacao = 'c';
-                mensagem = operacao + "," + coeficiente + "," + valor;
+                metodo = 2;
+                mensagem = operacao + coef + "," + valor + "," + metodo;
                 Client.setMensagem(mensagem);
                 output.setText(Client.criaSock());
                 
                 break;
 
             case 3:
-                // farenheit pra kelvin
-                mensagem = operacao + "," + coeficiente + "," + valor;
+                metodo = 2;
+                mensagem = operacao + coef + "," + valor + "," + metodo;
                 Client.setMensagem(mensagem);
                 output.setText(Client.criaSock());
                 
                 break;
 
             case 4:
-                // primeiro remove 32
-                // farenheit celsius
-                mensagem = operacao + "," + coeficiente + "," + valor;
+                metodo = 1;
+                mensagem = operacao + coef + "," + valor + "," + metodo;
                 Client.setMensagem(mensagem);
                 output.setText(Client.criaSock());
                 
                 break;
 
             case 5:
-                // kelvin farenheit
-                mensagem = operacao + "," + coeficiente + "," + valor;
+                metodo = 3;
+                mensagem = operacao + coef + "," + valor + "," + metodo;
                 Client.setMensagem(mensagem);
                 output.setText(Client.criaSock());
                 
                 break;
 
             case 6:
-                // kelvin celsius
                 operacao = 'c';
-                mensagem = operacao + "," + coeficiente + "," + valor;
+                metodo = 3;
+                mensagem = operacao + coef + "," + valor + "," + metodo;
                 Client.setMensagem(mensagem);
                 output.setText(Client.criaSock());
                 

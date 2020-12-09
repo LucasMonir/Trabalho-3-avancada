@@ -66,7 +66,6 @@ public class ConversorDistancia extends JFrame {
 
         switch(index){
             case 1:
-                // metro pra pé
                 operacao = 'm';
                 coeficiente = 3.281;
                 String mensagem = operacao + "," + coeficiente + "," + valor;
@@ -76,7 +75,6 @@ public class ConversorDistancia extends JFrame {
                 break;
 
             case 2:
-                // km pra milha
                 operacao = 'd';
                 coeficiente = 1.609;
                 mensagem = operacao + "," + coeficiente + "," + valor;
@@ -86,7 +84,6 @@ public class ConversorDistancia extends JFrame {
                 break;
 
             case 3:
-                // pé pra metro 
                 operacao = 'd';
                 coeficiente = 3.281;
                 mensagem = operacao + "," + coeficiente + "," + valor;
@@ -96,7 +93,6 @@ public class ConversorDistancia extends JFrame {
                 break;
 
             case 4:
-                // milha pra km
                 operacao = 'm';
                 coeficiente = 1.609;
                 mensagem = operacao + "," + coeficiente + "," + valor;

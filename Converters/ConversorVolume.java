@@ -66,7 +66,6 @@ public class ConversorVolume extends JFrame {
 
         switch (index) {
             case 1:
-                // ml oz
                 operacao = 'd';
                 coeficiente = 29.574;
                 String mensagem = operacao + "," + coeficiente + "," + valor;
@@ -76,7 +75,6 @@ public class ConversorVolume extends JFrame {
                 break;
 
             case 2:
-                // onça liquida pra ml
                 operacao = 'm';
                 coeficiente = 29.574;
                 mensagem = operacao + "," + coeficiente + "," + valor;
@@ -86,7 +84,6 @@ public class ConversorVolume extends JFrame {
                 break;
 
             case 3:
-                // litro -> gallon
                 operacao = 'd';
                 coeficiente = 3.785;
                 mensagem = operacao + "," + coeficiente + "," + valor;
@@ -96,7 +93,6 @@ public class ConversorVolume extends JFrame {
                 break;
 
             case 4:
-                // gallon -> litro
                 operacao = 'm';
                 coeficiente = 3.785;
                 mensagem = operacao + "," + coeficiente + "," + valor;
