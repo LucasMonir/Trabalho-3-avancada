@@ -4,6 +4,7 @@ import java.io.*;
 import java.net.*;
 import java.util.*;
 
+
 public class MenuServer extends Thread {
     private ServerSocket socket;
     private int port = 2000; 
