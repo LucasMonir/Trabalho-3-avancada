@@ -2,11 +2,18 @@ package Converters;
 
 import java.io.*;
 import java.net.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MenuServer extends Thread {
     private ServerSocket socket;
     private int port = 2000;
+    private static int id = 0;
 
     public MenuServer() {
         super();
@@ -25,10 +32,8 @@ public class MenuServer extends Thread {
             if (socket == null)
                 return;
             try {
-                // Aguarda um cliente se conectar
                 client = socket.accept();
 
-                // Recebe a mensagem do cliente e imprime na tela
                 BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
                 String c = in.readLine();
                 System.out.println(c);
@@ -41,11 +46,11 @@ public class MenuServer extends Thread {
                 double coef = Double.parseDouble(params[1]);
                 int metodo;
 
-                if(params.length == 4){
+                if (params.length == 4) {
                     metodo = Integer.parseInt(params[3]);
                 }
 
-                if (Double.parseDouble(params[1]) != 0.0) {
+                if (coef != 0.0) {
                     c = "" + converteValores(valor, coef, operacao);
                 } else {
                     switch (Integer.parseInt(params[3])) {
@@ -61,16 +66,16 @@ public class MenuServer extends Thread {
                     }
                 }
 
+                salvaDb(valor, operacao, Double.parseDouble(c));
+
                 System.out.println(c);
 
-                // Envia uma resposta ao cliente
                 BufferedOutputStream bos = new BufferedOutputStream(client.getOutputStream());
                 PrintWriter os = new PrintWriter(bos, false);
                 System.out.println(bos);
                 os.println(c);
                 os.flush();
 
-                // Efetua e feecha a conexão
                 os.close();
                 client.close();
             } catch (IOException e) {
@@ -85,7 +90,6 @@ public class MenuServer extends Thread {
         ms.start();
     }
 
-    // comunicação usando serialização e flush
     public static double converteValores(double valor, double coeficiente, char operacao) {
         if (operacao == 'm') {
             return valor * coeficiente;
@@ -115,6 +119,48 @@ public class MenuServer extends Thread {
             return valor - 273.15;
         } else {
             return converteCelsiusFarenheit((valor - 273.15), operacao);
+        }
+    }
+
+    public static void salvaDb(double valor, char operacao, double resultado) {
+        SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+        Date date = new Date();
+        String data = formatter.format(date);
+        id++;
+
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+
+            System.out.println("Conexão realizada");
+
+            Statement statement = connection.createStatement();
+
+            statement.execute(
+                    "CREATE TABLE IF NOT EXISTS log(id integer primary key autoincrement, valor text,  operacao text,  resultado text, hora text)");
+
+            statement.execute("INSERT INTO log(id, valor,operacao, resultado, hora) values (" + id + ", '" + valor
+                    + "','" + operacao + "','" + resultado + "','" + data + "')");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void exibeTudo() {
+        try (Connection connection = DriverManager.getConnection("jdbc:sqlite:banco.db")) {
+
+            System.out.println("Conexão realizada");
+
+            Statement statement = connection.createStatement();
+
+            String query = "CREATE TABLE IF NOT EXISTS log(id integer primary key autoincrement, valor text,  operacao text,  resultado text, hora text)";
+        
+            ResultSet rs   = statement.executeQuery(query);
+
+            while (rs.next()) {
+                System.out.println(rs.getInt("id"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

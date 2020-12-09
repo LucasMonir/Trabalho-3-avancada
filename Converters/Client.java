@@ -14,8 +14,7 @@ public class Client extends JFrame {
     private static String host = "localhost";
     private static int port = 2000;
     public static String mensagem = "";
-    private String[] opcoesMenu = { "", "Conversor de temperatura", "Conversor de distância", "Conversor de peso",
-            "Conversor de volume" };
+    private String[] opcoesMenu = { "", "Conversor de temperatura", "Conversor de distância", "Conversor de peso", "Conversor de volume", "Requisitar registro de operações" };
     private JComboBox<String> selecaoMenu = new JComboBox<>(opcoesMenu);
     private JButton ok = new JButton("OK");
 
@@ -59,7 +58,7 @@ public class Client extends JFrame {
         setVisible(true);
     }
 
-    public void getSelectedMenuItem() {
+    public void getSelectedMenuItem(){
         int index = selecaoMenu.getSelectedIndex();
 
         switch (index) {
@@ -78,6 +77,13 @@ public class Client extends JFrame {
             case 4:
                 new ConversorVolume();
                 break;
+            case 5:
+                Client.setMensagem("registro");
+                Client.criaSock();
+                break;
+
+            default:
+                System.out.println("Inválido, abortando!");
         }
     }
 
@@ -100,13 +106,12 @@ public class Client extends JFrame {
             
             while (!eof) {
                 String line = in.readLine();
-                if (line != null)
+                if (line != null){
                     System.out.println(line);
                     sock.close();
                     return line + "";
+                }
             }
-
-            
             
         } catch (IOException e) {
             System.out.println("IO Error: " + e.getMessage());
