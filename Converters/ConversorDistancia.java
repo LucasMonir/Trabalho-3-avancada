@@ -60,6 +60,7 @@ public class ConversorDistancia extends JFrame {
 
     public void getSelectedMenuItem() {
         int index = selecaoMenu.getSelectedIndex();
+        double valor = Double.parseDouble(input.getText());
         char operacao = 'a';
         double coeficiente = 0;
 
@@ -68,25 +69,41 @@ public class ConversorDistancia extends JFrame {
                 // metro pra pé
                 operacao = 'm';
                 coeficiente = 3.281;
-            break;
+                String mensagem = operacao + "," + coeficiente + "," + valor;
+                Client.setMensagem(mensagem);
+                output.setText(Client.criaSock());
+
+                break;
 
             case 2:
                 // km pra milha
                 operacao = 'd';
                 coeficiente = 1.609;
-            break;
+                mensagem = operacao + "," + coeficiente + "," + valor;
+                Client.setMensagem(mensagem);
+                output.setText(Client.criaSock());
+                
+                break;
 
             case 3:
                 // pé pra metro 
                 operacao = 'd';
                 coeficiente = 3.281;
-            break;
+                mensagem = operacao + "," + coeficiente + "," + valor;
+                Client.setMensagem(mensagem);
+                output.setText(Client.criaSock());
+                
+                break;
 
             case 4:
                 // milha pra km
                 operacao = 'm';
                 coeficiente = 1.609;
-            break;
+                mensagem = operacao + "," + coeficiente + "," + valor;
+                Client.setMensagem(mensagem);
+                output.setText(Client.criaSock());
+
+                break;
         }
     }
 }

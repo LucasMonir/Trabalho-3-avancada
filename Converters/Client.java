@@ -1,3 +1,5 @@
+package Converters;
+
 import Converters.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -11,6 +13,7 @@ import javax.swing.*;
 public class Client extends JFrame {
     private static String host = "localhost";
     private static int port = 2000;
+    public static String mensagem = "";
     private String[] opcoesMenu = { "", "Conversor de temperatura", "Conversor de distância", "Conversor de peso",
             "Conversor de volume" };
     private JComboBox<String> selecaoMenu = new JComboBox<>(opcoesMenu);
@@ -78,44 +81,46 @@ public class Client extends JFrame {
         }
     }
 
-    public static Socket criarSocket() throws IOException {
+    public static void setMensagem(String mensagem2){
+        mensagem = mensagem2;
+    }
 
+    public static String criaSock() {
         try {
-            // as telas chamam os metodos de abrir conexão e fechar conexão do client, e de
-            // lá enviam e recebem o parametros
-
-            // Efetua a conexão com o servidor
             Socket sock = new Socket(host, (port));
             sock.setSoTimeout(20000);
 
             // Envia uma mensagem para o servidor
             BufferedOutputStream bos = new BufferedOutputStream(sock.getOutputStream());
             PrintWriter os = new PrintWriter(bos, false);
-            os.println("COLOCAR AQUI OQ É P ENVIAR E TAL NE");
+            os.println(mensagem);
             os.flush();
 
             // Aguarda uma resposta do servidor e imprime na tela
             BufferedReader in = new BufferedReader(new InputStreamReader(sock.getInputStream()));
             boolean eof = false;
+           
             while (!eof) {
                 String line = in.readLine();
-                if (line != null)
+                if (line != null) {
                     System.out.println(line);
-                else
+                } else {
                     eof = true;
+                }
             }
 
             // Fecha a conexão
             sock.close();
+            return in + "";
         } catch (IOException e) {
             System.out.println("IO Error: " + e.getMessage());
         }
-    };
+
+        System.out.println("Capotou o corsa XD");
+        return null;
+    }
 
     public static void main(String[] args) {
-        // codigo do popov
-
-        // nossa janela ai
         new Client();
     }
 }

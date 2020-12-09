@@ -1,4 +1,5 @@
 package Converters;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -59,33 +60,50 @@ public class ConversorPeso extends JFrame {
 
     public void getSelectedMenuItem() {
         int index = selecaoMenu.getSelectedIndex();
+        double valor = Double.parseDouble(input.getText());
         char operacao = 'a';
         double coeficiente = 0;
 
-        switch(index){
+        switch (index) {
             case 1:
                 // kg pra libra, coeficiente pra ilustrar, pode apagar
                 operacao = 'm';
                 coeficiente = 2.205;
-            break;
+                String mensagem = operacao + "," + coeficiente + "," + valor;
+                Client.setMensagem(mensagem);
+                output.setText(Client.criaSock());
+                
+                break;
 
             case 2:
-                // libra pra kg , enviar coeficiente 
+                // libra pra kg , enviar coeficiente
                 operacao = 'd';
                 coeficiente = 2.205;
-            break;
+                mensagem = operacao + "," + coeficiente + "," + valor;
+                Client.setMensagem(mensagem);
+                output.setText(Client.criaSock());
+                
+                break;
 
             case 3:
                 // onça pra grama , enviar coeficiente
                 operacao = 'm';
                 coeficiente = 28.34952;
-            break;
+                mensagem = operacao + "," + coeficiente + "," + valor;
+                Client.setMensagem(mensagem);
+                output.setText(Client.criaSock());
+                
+                break;
 
             case 4:
                 // grama pra onça , enviar coeficiente
                 operacao = 'd';
                 coeficiente = 28.34952;
-            break;
+                mensagem = operacao + "," + coeficiente + "," + valor;
+                Client.setMensagem(mensagem);
+                output.setText(Client.criaSock());
+                
+                break;
         }
-    }   
+    }
 }
